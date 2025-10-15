@@ -4,15 +4,20 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class Factura {
-    private String codigo;
+    private int codigo;
     private LocalDate fecha;
     private Cliente cliente;
     private LinkedList<DetalleFactura> listaDetallesFactura = new LinkedList<>();
 
-    public Factura(String codigo, LocalDate fecha, Cliente cliente) {
+    public Factura(int codigo, LocalDate fecha, Cliente cliente) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.cliente = cliente;
+    }
+
+    // Getter del código
+    public int getCodigo() {
+        return codigo;
     }
 
     public void agregarDetalle(DetalleFactura detalle) {
@@ -20,10 +25,7 @@ public class Factura {
     }
 
     public double calcularTotal() {
-        double subtotal = listaDetallesFactura.stream()
-                .mapToDouble(DetalleFactura::getSubTotal)
-                .sum();
-
+        double subtotal = listaDetallesFactura.stream().mapToDouble(DetalleFactura::getSubTotal).sum();
         double descuento = subtotal * cliente.calcularDescuento();
         return subtotal - descuento;
     }
@@ -33,8 +35,9 @@ public class Factura {
         System.out.println("Cliente: " + cliente.getNombre());
         System.out.println("Detalles:");
         listaDetallesFactura.forEach(d ->
-                System.out.println(" - " + d.getProducto().getNombre() + " x" + d.getProducto().cantidad + ": $" + d.getSubTotal())
+                System.out.println(" - " + d.getProducto().getNombre() + " x" + d.getCantidad() + ": $" + d.getSubTotal())
         );
         System.out.println("Total a pagar: $" + calcularTotal());
     }
 }
+

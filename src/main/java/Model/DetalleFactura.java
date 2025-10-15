@@ -18,4 +18,8 @@ public class DetalleFactura {
     public Producto getProducto() {
         return producto;
     }
+    public int getCantidad() {
+        return cantidad;
+    }
+
 }
